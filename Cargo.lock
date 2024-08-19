@@ -75,6 +75,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde_yaml_demo"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_yaml_ng",
+]
+
+[[package]]
 name = "serde_yaml_ng"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -85,14 +93,6 @@ dependencies = [
  "ryu",
  "serde",
  "unsafe-libyaml",
-]
-
-[[package]]
-name = "simple_serde_app"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_yaml_ng",
 ]
 
 [[package]]
