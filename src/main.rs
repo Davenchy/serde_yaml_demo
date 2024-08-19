@@ -1,18 +1,18 @@
 mod actions;
-mod template;
+mod state;
 
 use actions::Action;
+use state::State;
 use std::path::PathBuf;
-use template::Template;
 
-const SAVE_PATH: &str = "./conda.yml";
+const STATE_FILE_PATH: &str = "./state.yml";
 
 fn main() -> std::io::Result<()> {
-    let save_path_buf = PathBuf::from(SAVE_PATH);
-    let mut template = Template::load_or_new(save_path_buf.clone());
+    let save_path_buf = PathBuf::from(STATE_FILE_PATH);
+    let mut state = State::load_or_new(save_path_buf.clone());
 
     loop {
-        println!("{template}");
+        println!("{state:?}");
         let action_result = Action::read_stdin();
 
         match action_result {
@@ -22,16 +22,16 @@ fn main() -> std::io::Result<()> {
                 }
             },
             Ok(action) => match action {
-                Action::Left => template.position.move_steps(-5, 0),
-                Action::Right => template.position.move_steps(5, 0),
-                Action::UP => template.position.move_steps(0, -5),
-                Action::Down => template.position.move_steps(0, 5),
-                Action::Heal => template.heal(10),
-                Action::Damage => template.damage(10),
+                Action::Left => state.position.move_steps(-5, 0),
+                Action::Right => state.position.move_steps(5, 0),
+                Action::UP => state.position.move_steps(0, -5),
+                Action::Down => state.position.move_steps(0, 5),
+                Action::Heal => state.heal(10),
+                Action::Damage => state.damage(10),
                 Action::Quit => break,
                 Action::Save => {
-                    template.save(save_path_buf.clone())?;
-                    println!("Saved to {SAVE_PATH}!");
+                    state.save(save_path_buf.clone())?;
+                    println!("Saved to {STATE_FILE_PATH}!");
                 }
             },
         }

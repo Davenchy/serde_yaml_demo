@@ -9,7 +9,7 @@ use std::{
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Template {
+pub struct State {
     pub position: Point,
     health: usize,
 }
@@ -20,7 +20,7 @@ pub struct Point {
     y: isize,
 }
 
-impl Template {
+impl State {
     pub fn new() -> Self {
         Self {
             position: Point::origin(),
@@ -47,8 +47,8 @@ impl Template {
     pub fn load_or_new(path: PathBuf) -> Self {
         let loaded_result = Self::load(path);
 
-        if let Ok(template) = loaded_result {
-            template
+        if let Ok(state) = loaded_result {
+            state
         } else {
             Self::new()
         }
@@ -67,16 +67,6 @@ impl Template {
     }
 }
 
-impl std::fmt::Display for Template {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "Template {{ Position: ({}, {}), Health: {} }}",
-            self.position.x, self.position.y, self.health
-        )
-    }
-}
-
 impl Point {
     pub fn new(x: isize, y: isize) -> Self {
         Self { x, y }
@@ -89,5 +79,11 @@ impl Point {
     pub fn move_steps(&mut self, x_steps: isize, y_steps: isize) {
         self.x += x_steps;
         self.y += y_steps;
+    }
+}
+
+impl std::fmt::Display for Point {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.x, self.y)
     }
 }
