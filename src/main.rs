@@ -9,7 +9,7 @@ const STATE_FILE_PATH: &str = "./state.yml";
 
 fn main() -> std::io::Result<()> {
     let save_path_buf = PathBuf::from(STATE_FILE_PATH);
-    let mut state = State::load_or_new(save_path_buf.clone());
+    let mut state = State::load_or_new(&save_path_buf);
 
     loop {
         println!("{state:?}");
@@ -30,7 +30,7 @@ fn main() -> std::io::Result<()> {
                 Action::Damage => state.damage(10),
                 Action::Quit => break,
                 Action::Save => {
-                    state.save(save_path_buf.clone())?;
+                    state.save(&save_path_buf)?;
                     println!("Saved to {STATE_FILE_PATH}!");
                 }
             },

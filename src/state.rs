@@ -28,7 +28,7 @@ impl State {
         }
     }
 
-    pub fn load(path: PathBuf) -> io::Result<Self> {
+    pub fn load(path: &PathBuf) -> io::Result<Self> {
         let file = File::open(path)?;
         let reader = BufReader::new(file);
 
@@ -36,7 +36,7 @@ impl State {
         Ok(deserialized)
     }
 
-    pub fn save(&self, path: PathBuf) -> io::Result<()> {
+    pub fn save(&self, path: &PathBuf) -> io::Result<()> {
         let file = File::create(path)?;
         let writer = BufWriter::new(file);
 
@@ -44,7 +44,7 @@ impl State {
         Ok(())
     }
 
-    pub fn load_or_new(path: PathBuf) -> Self {
+    pub fn load_or_new(path: &PathBuf) -> Self {
         let loaded_result = Self::load(path);
 
         if let Ok(state) = loaded_result {
